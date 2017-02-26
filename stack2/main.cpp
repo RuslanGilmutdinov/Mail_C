@@ -15,7 +15,7 @@
 using std::cout;
 using std::endl;
 
-unsigned int number_of_comand_in_array (const char array_[][44]) const;
+unsigned int number_of_comand_in_array (const char array_[][44]);
 void abstract ();
 
 typedef cStack<double> stackDouble;
@@ -28,7 +28,7 @@ int main () {
     abstract ();
 
 #ifdef COPY_CONSTRUCTOR
-    stackDouble my_first_stack1 (my_first_stack); /* конструктор копирования */
+//    stackDouble my_first_stack1 (my_first_stack); /* конструктор копирования */
 #endif
     my_first_stack.push(13);
     my_first_stack.push(14);
@@ -56,8 +56,8 @@ int main () {
     my_first_stack.show();
     my_first_stack2.show();
 
-    stackDouble my_first_stack3 (my_first_stack);
-    return 0;
+ //   stackDouble my_first_stack3 (my_first_stack);
+
     bool end_of_while = true;
 
     const char analogue [][44] = {"push", "pop", "last", "show", "exit","\0"};
@@ -72,7 +72,8 @@ int main () {
  //   unsigned const int NUMBER_OF_COMAND = comand_in_array;
 
     unsigned const int NUMBER_OF_COMAND = number_of_comand_in_array (analogue);
-/*
+    return 0;
+    /*
     for (int i = 0; (0 != strcmp(analogue [i], "\0")); ++i ) {
 
         cout << "i= " << i << endl;
@@ -136,9 +137,11 @@ std::vector<double> temporary_storage;
     return 0;
 }
 
-unsigned int number_of_comand_in_array (const char array_[][44]) const {
+unsigned int number_of_comand_in_array (const char array_[][44]) {
   unsigned int comand_in_array = 0;
-
+    for (int i = 0; i < 4; i ++) {
+        cout << "array_ = " << array_ [i] << endl;
+    }
     for (auto s: array_) {
         comand_in_array++;
         cout << "comand_in_array =  " << comand_in_array << endl;
