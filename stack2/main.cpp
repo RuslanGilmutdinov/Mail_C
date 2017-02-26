@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <vector>
 #include <assert.h>
+#include <math.h>
 
 #include "cStack.h"
 #include "const_guard_class.h"
@@ -14,23 +15,49 @@
 using std::cout;
 using std::endl;
 
-//int number_of_comand_in_array (const char *);
-
+unsigned int number_of_comand_in_array (const char array_[][44]) const;
+void abstract ();
 
 typedef cStack<double> stackDouble;
 
 int main () {
 
-    stackDouble my_first_stack = stackDouble (); /*Почему так не работае при наличии конструктора копирования*/
+    //stackDouble my_first_stack = stackDouble (); /*Почему так не работае при наличии конструктора копирования*/
     stackDouble my_first_stack2; /* почему без пустых скобочек?? */
+    stackDouble my_first_stack;
+    abstract ();
 
 #ifdef COPY_CONSTRUCTOR
     stackDouble my_first_stack1 (my_first_stack); /* конструктор копирования */
 #endif
-  //  my_first_stack1 = my_first_stack;
-  //  my_first_stack.push(4.3);
- //   my_first_stack.show();
+    my_first_stack.push(13);
+    my_first_stack.push(14);
+    my_first_stack.push(15);
+    my_first_stack.push(16);
+    my_first_stack.push(17);
+    my_first_stack.push(18);
+    my_first_stack.push(19);
 
+    my_first_stack2.push(44);
+    my_first_stack2.push(45);
+    my_first_stack2.push(46);
+    my_first_stack2.push(47);
+    my_first_stack2.push(48);
+    my_first_stack2.push(49);
+    my_first_stack2.push(50);
+
+    my_first_stack.show();
+    my_first_stack2.show();
+
+
+    my_first_stack = my_first_stack2;
+
+    my_first_stack2.push(500);
+    my_first_stack.show();
+    my_first_stack2.show();
+
+    stackDouble my_first_stack3 (my_first_stack);
+    return 0;
     bool end_of_while = true;
 
     const char analogue [][44] = {"push", "pop", "last", "show", "exit","\0"};
@@ -39,13 +66,12 @@ int main () {
 
     for (auto s: analogue) {
         comand_in_array++;
-        cout << "comand_in_array =  " << comand_in_array << endl;
     }
     if (comand_in_array <= 0) { assert (("NO COMMAND in ARRAY",0));}
 
-    unsigned const int NUMBER_OF_COMAND = comand_in_array;
+ //   unsigned const int NUMBER_OF_COMAND = comand_in_array;
 
-//  unsigned const int NUMBER_OF_COMAND = number_of_comand_in_array (&analogue[0][0]) ;
+    unsigned const int NUMBER_OF_COMAND = number_of_comand_in_array (analogue);
 /*
     for (int i = 0; (0 != strcmp(analogue [i], "\0")); ++i ) {
 
@@ -94,11 +120,24 @@ int main () {
     }	// end of while
 
 
+std::vector<double> temporary_storage;
+
+    while ( !(my_first_stack.show_last_element () != my_first_stack.show_last_element ()) ) {
+        temporary_storage.push_back (my_first_stack.pop ());
+        cout << "XOXOXOXOXOX" << endl;
+    }
+
+    int size = temporary_storage.size ();
+    cout << "size " << size << endl;
+    for (int i = 0; i < size; i++) {
+        cout << "temporary_storage " << temporary_storage.back () << endl;
+         temporary_storage.pop_back ();
+    }
     return 0;
 }
-/*
-int number_of_comand_in_array (const char *array_) {
-    int comand_in_array = 0;
+
+unsigned int number_of_comand_in_array (const char array_[][44]) const {
+  unsigned int comand_in_array = 0;
 
     for (auto s: array_) {
         comand_in_array++;
@@ -107,4 +146,19 @@ int number_of_comand_in_array (const char *array_) {
     if (comand_in_array <= 0) { assert (("NO COMMAND in ARRAY",0));}
     return comand_in_array;
 }
+
+
+//==========================
+
+/*!
+        Gide to comand
 */
+void abstract () {
+        cout << "Hellow ! \n"
+                         << "Comand Enter like \n"
+                         << "push 232 \n"
+                         << "pop  \n"
+                         << "show \n"
+                         << "last \n"
+                         << "exit" << endl;
+}

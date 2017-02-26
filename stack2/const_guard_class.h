@@ -1,7 +1,7 @@
 #ifndef CONST_GUARD_CLASS_H_
 #define CONST_GUARD_CLASS_H_
 //==========================================
-// #define COPY_CONSTRUCTOR
+ #define COPY_CONSTRUCTOR
 //==========================================
 //=============================================		
 

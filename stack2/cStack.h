@@ -3,16 +3,15 @@
 
 #include <iostream>
 #include <assert.h>
+#include <vector>
+#include <math.h>
 
 #include "cMass.h"
 #include "const_guard_class.h"
 
-//#define USE_SUPER_PUPER_GUARDS 
-
 using std::cout;
 using std::cin;
 using std::endl;
-
 
 // --------------------------
 /*!
@@ -20,7 +19,7 @@ using std::endl;
 	
 	it has constructor, distruction, show, Ok,
 	pop, push and other function
- */
+*/
 
 typedef cMass<double> MassDouble;
 
@@ -29,14 +28,30 @@ class cStack {
 	
 	public:
 		cStack ();
-		cStack ( T data [], const int n);
+                cStack ( T data [], const int n); /*Not realizd */
 		~cStack ();
 #ifdef COPY_CONSTRUCTOR
                 cStack (cStack &copy_stack);
 #endif
-                cStack <T> &operator=(const cStack <T> &copy_stack ) {
-                    // Почему это не работает ???
-                    cout << "\n \n Not work \n \n";
+                cStack <T> &operator=(cStack <T> &copy_stack ) {
+                    std::vector<T> temporary_storage;
+                    /*Заполняем вектор всеми элементами из копируемого стека */
+                    while ( !(copy_stack.show_last_element () != copy_stack.show_last_element ()) ) {
+                        temporary_storage.push_back (copy_stack.pop ());
+                    }
+
+                    while ( !(this->show_last_element () != this->show_last_element ()) ) {
+                        this->pop ();
+                    }
+
+                    int size = temporary_storage.size ();
+                    cout << "size = " << size << endl;
+                    for (int i = 0; i < size; i++) {
+                       this->push (temporary_storage.back ());
+                       copy_stack.push (temporary_storage.back ());
+                       temporary_storage.pop_back ();
+                    }
+
                 }
 
                 bool Ok () const;
@@ -48,13 +63,13 @@ class cStack {
 		int size ();
 		T show_last_element () const;
 		
-	private:   
+        private:
 		int m_memory_guard_first;
                 int m_count;
 		int m_memory_guard_second;      
 		int m_memory_guard_third;
 		MassDouble *m_mass;
-                void processing_error (const int namb_Of_error);
+                void processing_error (const int namb_Of_error) const;
 };
 
 //==========================
@@ -65,7 +80,7 @@ cStack <T>::cStack () : m_count (0), m_memory_guard_first (guard_first), m_memor
 	
 	m_mass = new MassDouble (MAX_STACK_SIZE);
 		
-}				
+}
 
 //==========================
 template <typename T> 
@@ -73,12 +88,28 @@ cStack <T>::cStack (  T data [], int n) : m_count (n)/*, m_data ({data}) */{}
 
 //==========================
 #ifdef COPY_CONSTRUCTOR
-    template <typename T>
-    cStack <T>::cStack (cStack <T> &copy_stack) {
-        cout << "\n \n \n cStack (cStack <T> &copy_stack) \n \n \n";
+template <typename T>
+cStack <T>::cStack (cStack <T> &copy_stack) {
+    cout << "\n \n \n cStack (cStack <T> &copy_stack) \n \n \n";
 
-        //m_count = copy_stack.?????
+    std::vector<T> temporary_storage;
+/*Заполняем вектор всеми элементами из копируемого стека */
+    while ( !(copy_stack.show_last_element () != copy_stack.show_last_element ()) ) {
+        temporary_storage.push_back (copy_stack.pop ());
     }
+    while ( !(this->show_last_element () != this->show_last_element ()) ) {
+        this->pop ();
+    }
+
+    int size = temporary_storage.size ();
+
+    for (int i = 0; i < size; i++) {
+        this->push (temporary_storage.back ());
+        copy_stack.push (temporary_storage.back ());
+        temporary_storage.pop_back ();
+    }
+
+}
 #endif
 
 
@@ -116,8 +147,8 @@ bool cStack <T>::Ok () const {
 		return false;
 	}
 	
-	if (m_memory_guard_first != guard_first ||	
-										m_memory_guard_second != guard_second ||	m_memory_guard_third != guard_third) {
+        if (m_memory_guard_first != guard_first || m_memory_guard_second != guard_second ||
+                                                    m_memory_guard_third != guard_third) {
 		cout << "!!! boundary constants are change !!! \n";
 		return false;			
 	} 
@@ -147,8 +178,7 @@ bool cStack <T>::push (T valua) {
 	_ASSERT_OK_()
 #endif
 	
-	return true;
-		
+	return true;		
 }
 
 //======================
@@ -165,7 +195,7 @@ T cStack <T>::pop () {
         if (m_count == 0) {
             processing_error (no_element);
             T tag = 1./0.;
-            return tag;
+            return NAN;
         }
 	T last_element = m_mass->take_number ((m_count) - 1); 
 
@@ -216,8 +246,12 @@ T cStack <T>::show_last_element () const {
 #ifdef USE_SUPER_PUPER_GUARDS	
 	_ASSERT_OK_()
 #endif	
-	
-		T last_element = m_mass->take_number ((m_count) - 1); //m_data [(m_count) - 1];
+        if (m_count == 0) {
+            processing_error (no_element);
+            T tag = 1./0.;
+            return NAN;
+        }
+        T last_element = m_mass->take_number ((m_count) - 1); //m_data [(m_count) - 1];
 		
 
 #ifdef USE_SUPER_PUPER_GUARDS	
@@ -228,7 +262,7 @@ T cStack <T>::show_last_element () const {
 
 //==========================
 template <typename T>
-void cStack <T>::processing_error (const int namb_Of_error) {
+void cStack <T>::processing_error (const int namb_Of_error) const {
 
 #ifdef USE_SUPER_PUPER_GUARDS
         _ASSERT_OK_()
