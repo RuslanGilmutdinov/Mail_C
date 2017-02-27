@@ -1,8 +1,6 @@
 #ifndef CONST_GUARD_CLASS_H_
 #define CONST_GUARD_CLASS_H_
-//==========================================
- #define COPY_CONSTRUCTOR
-//==========================================
+
 //=============================================		
 
 	#ifdef _MSC_VER

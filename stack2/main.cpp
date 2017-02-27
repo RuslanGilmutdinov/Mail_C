@@ -33,33 +33,25 @@ typedef cStack<double> stackDouble;
 //! main
 //---------------------------------------
 
-
 int main () {
 
+    abstract (); /*Show abstract*/
+//==============РУЧНЫЕ ТЕСТЫ НА ОПЕРАТОР '=' И КОНСТРУКТОР КОПИРОВАНИЯ==========
+{
     //stackDouble my_first_stack = stackDouble (); /*Почему так не работае при наличии конструктора копирования*/
     stackDouble my_first_stack2; /* почему без пустых скобочек?? */
+
     stackDouble my_first_stack;
-    abstract ();
 
-#ifdef COPY_CONSTRUCTOR
     stackDouble my_first_stack1 (my_first_stack); /* конструктор копирования */
-#endif
-    my_first_stack.push(13);
-    my_first_stack.push(14);
-    my_first_stack.push(15);
-    my_first_stack.push(16);
-    my_first_stack.push(17);
-    my_first_stack.push(18);
-    my_first_stack.push(19);
 
-    my_first_stack2.push(44);
-    my_first_stack2.push(45);
-    my_first_stack2.push(46);
-    my_first_stack2.push(47);
-    my_first_stack2.push(48);
-    my_first_stack2.push(49);
-    my_first_stack2.push(50);
+    for (int i = 13; i < 20; i++) {
+        my_first_stack.push ((double) i);
+    }
 
+    for (int i = 44; i < 51; i++) {
+        my_first_stack2.push ((double) i);
+    }
     my_first_stack.show();
     my_first_stack2.show();
 
@@ -73,13 +65,17 @@ int main () {
     stackDouble my_first_stack3 (my_first_stack);
     my_first_stack.show();
     my_first_stack3.show();
+}
+//==========END OF TESTS=========
+    abstract (); /*Show abstract*/
+
+    stackDouble my_first_stack;
 
     bool end_of_while = true;
 
     const char analogue [][44] = {"push", "pop", "last", "show", "exit"};
 
     unsigned const int NUMBER_OF_COMAND = number_of_comand_in_array (analogue);
-    return 0;
 
     while (end_of_while) {
 
@@ -120,24 +116,13 @@ int main () {
             } // end of if
         } // end of for
     }	// end of while
-
-
-std::vector<double> temporary_storage;
-
-    while ( !(my_first_stack.show_last_element () != my_first_stack.show_last_element ()) ) {
-        temporary_storage.push_back (my_first_stack.pop ());
-        cout << "XOXOXOXOXOX" << endl;
-    }
-
-    int size = temporary_storage.size ();
-    cout << "size " << size << endl;
-    for (int i = 0; i < size; i++) {
-        cout << "temporary_storage " << temporary_storage.back () << endl;
-         temporary_storage.pop_back ();
-    }
     return 0;
 } // end of main ()
 
+//==========================
+/*!
+    Counts the number of elements in the array
+*/
  template <int N> unsigned int number_of_comand_in_array (const char (&array_) [N][44]) {
    int comand_in_array = 0;
    /* for (int i = 0; i < 4; i ++) {
@@ -152,7 +137,6 @@ std::vector<double> temporary_storage;
 
 
 //==========================
-
 /*!
         Gide to comand
 */

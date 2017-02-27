@@ -124,7 +124,6 @@ G cMass <G>::take_number (int iterator_) {
 #endif
 }
 
-
 //==========================
 /*!
   The function is showing all array

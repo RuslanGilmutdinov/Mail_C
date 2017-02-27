@@ -41,29 +41,29 @@ class cStack {
         cStack ();
         cStack ( T data [], const int n); /*Not realizd */
         ~cStack ();
-    #ifdef COPY_CONSTRUCTOR
-            cStack (cStack &copy_stack);
-    #endif
-            cStack <T> &operator=(cStack <T> &copy_stack ) {
-                std::vector<T> temporary_storage;
-                /*Заполняем вектор всеми элементами из копируемого стека */
-                while ( !(copy_stack.show_last_element () != copy_stack.show_last_element ()) ) {
-                    temporary_storage.push_back (copy_stack.pop ());
-                }
 
-                while ( !(this->show_last_element () != this->show_last_element ()) ) {
-                    this->pop ();
-                }
+        cStack (cStack &copy_stack);
 
-                int size = temporary_storage.size ();
-                cout << "size = " << size << endl;
-                for (int i = 0; i < size; i++) {
-                   this->push (temporary_storage.back ());
-                   copy_stack.push (temporary_storage.back ());
-                   temporary_storage.pop_back ();
-                }
-
+        cStack <T> &operator=(cStack <T> &copy_stack ) {
+            std::vector<T> temporary_storage;
+            /*Заполняем вектор всеми элементами из копируемого стека */
+            while ( !(copy_stack.show_last_element () != copy_stack.show_last_element ()) ) {
+                temporary_storage.push_back (copy_stack.pop ());
             }
+
+            while ( !(this->show_last_element () != this->show_last_element ()) ) {
+                this->pop ();
+            }
+
+            int size = temporary_storage.size ();
+            cout << "size = " << size << endl;
+            for (int i = 0; i < size; i++) {
+               this->push (temporary_storage.back ());
+               copy_stack.push (temporary_storage.back ());
+               temporary_storage.pop_back ();
+            }
+
+        }
 
         bool Ok () const;
         void show () const;
@@ -73,6 +73,8 @@ class cStack {
 
         int size ();
         T show_last_element () const;
+
+        bool empty () const;
 
     private:
         int m_memory_guard_first;
@@ -98,7 +100,6 @@ template <typename T>
 cStack <T>::cStack (  T data [], int n) : m_count (n)/*, m_data ({data}) */{}
 
 //==========================
-#ifdef COPY_CONSTRUCTOR
 template <typename T>
 cStack <T>::cStack (cStack <T> &copy_stack) {
     cout << "\n \n \n cStack (cStack <T> &copy_stack) \n \n \n";
@@ -126,7 +127,6 @@ cStack <T>::cStack (cStack <T> &copy_stack) {
     }
 
 }
-#endif
 
 
 //==========================
@@ -282,6 +282,20 @@ T cStack <T>::show_last_element () const {
 	_ASSERT_OK_()
 #endif		
 	return last_element;
+}
+
+//==========================
+//---------------------------------------
+//! The function check array
+//! @return true if array empty
+//---------------------------------------
+template <typename T>
+bool cStack <T>::empty () const {
+    if (m_count == 0) {
+        return true;
+    }
+
+    return false;
 }
 
 //==========================
