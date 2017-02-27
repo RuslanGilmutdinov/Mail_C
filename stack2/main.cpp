@@ -15,7 +15,7 @@
 using std::cout;
 using std::endl;
 
-unsigned int number_of_comand_in_array (const char array_[][44]);
+ template <int N> unsigned int number_of_comand_in_array (const char (&array_) [N][44]);
 void abstract ();
 
 typedef cStack<double> stackDouble;
@@ -28,7 +28,7 @@ int main () {
     abstract ();
 
 #ifdef COPY_CONSTRUCTOR
-//    stackDouble my_first_stack1 (my_first_stack); /* конструктор копирования */
+    stackDouble my_first_stack1 (my_first_stack); /* конструктор копирования */
 #endif
     my_first_stack.push(13);
     my_first_stack.push(14);
@@ -56,29 +56,16 @@ int main () {
     my_first_stack.show();
     my_first_stack2.show();
 
- //   stackDouble my_first_stack3 (my_first_stack);
+    stackDouble my_first_stack3 (my_first_stack);
+    my_first_stack.show();
+    my_first_stack3.show();
 
     bool end_of_while = true;
 
-    const char analogue [][44] = {"push", "pop", "last", "show", "exit","\0"};
-
-    int comand_in_array = 0;
-
-    for (auto s: analogue) {
-        comand_in_array++;
-    }
-    if (comand_in_array <= 0) { assert (("NO COMMAND in ARRAY",0));}
-
- //   unsigned const int NUMBER_OF_COMAND = comand_in_array;
+    const char analogue [][44] = {"push", "pop", "last", "show", "exit"};
 
     unsigned const int NUMBER_OF_COMAND = number_of_comand_in_array (analogue);
     return 0;
-    /*
-    for (int i = 0; (0 != strcmp(analogue [i], "\0")); ++i ) {
-
-        cout << "i= " << i << endl;
-    }
-*/
 
     while (end_of_while) {
 
@@ -137,14 +124,13 @@ std::vector<double> temporary_storage;
     return 0;
 }
 
-unsigned int number_of_comand_in_array (const char array_[][44]) {
-  unsigned int comand_in_array = 0;
-    for (int i = 0; i < 4; i ++) {
+ template <int N> unsigned int number_of_comand_in_array (const char (&array_) [N][44]) {
+   int comand_in_array = 0;
+   /* for (int i = 0; i < 4; i ++) {
         cout << "array_ = " << array_ [i] << endl;
-    }
-    for (auto s: array_) {
+    }*/
+    for (auto &&s: array_) {
         comand_in_array++;
-        cout << "comand_in_array =  " << comand_in_array << endl;
     }
     if (comand_in_array <= 0) { assert (("NO COMMAND in ARRAY",0));}
     return comand_in_array;

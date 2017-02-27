@@ -74,7 +74,7 @@ class cStack {
 
 //==========================
 template <typename T> 
-cStack <T>::cStack () : m_count (0), m_memory_guard_first (guard_first), m_memory_guard_second ( guard_second),
+cStack <T>::cStack () : m_count (0), m_memory_guard_first (guard_first), m_memory_guard_second (guard_second),
 	
 	m_memory_guard_third (guard_third) {
 	
@@ -91,6 +91,11 @@ cStack <T>::cStack (  T data [], int n) : m_count (n)/*, m_data ({data}) */{}
 template <typename T>
 cStack <T>::cStack (cStack <T> &copy_stack) {
     cout << "\n \n \n cStack (cStack <T> &copy_stack) \n \n \n";
+    m_count = 0;
+    m_memory_guard_first  = guard_first;
+    m_memory_guard_second = guard_second;
+    m_memory_guard_third  = guard_third;
+    m_mass = new MassDouble (MAX_STACK_SIZE);
 
     std::vector<T> temporary_storage;
 /*Заполняем вектор всеми элементами из копируемого стека */
@@ -102,7 +107,7 @@ cStack <T>::cStack (cStack <T> &copy_stack) {
     }
 
     int size = temporary_storage.size ();
-
+    cout << "size " << size << endl;
     for (int i = 0; i < size; i++) {
         this->push (temporary_storage.back ());
         copy_stack.push (temporary_storage.back ());
