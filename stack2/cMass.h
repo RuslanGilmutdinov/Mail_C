@@ -1,5 +1,13 @@
+//---------------------------------------
+//! @file main.cpp
+//! Implements a cMass class
+//!
+//! @author Ruknez, 2017
+//---------------------------------------
+
 #ifndef cMASS_H_
 #define cMASS_H_
+
 #include <iostream>
 #include <assert.h>
 
@@ -7,6 +15,13 @@
 
 using std::endl;
 using std::cout;
+
+/*!
+        \brief class cMass
+
+        it has constructor, distruction, show, Ok,
+        and other function
+*/
 
 template <typename G> 
 class cMass {
@@ -59,6 +74,11 @@ cMass <G>::~cMass () {
 }
 
 //==========================
+//---------------------------------------
+//! The function add one more number in array
+//! @param value is an element to be pushed
+//! @return success of operation
+//---------------------------------------
 template <typename G>
 bool cMass <G>::push_number (G number_, int iterator_) {
 
@@ -82,6 +102,11 @@ bool cMass <G>::push_number (G number_, int iterator_) {
 }
 
 //==========================
+//---------------------------------------
+//! The function return number from array
+//! @param iterator to number
+//! @return number from array
+//---------------------------------------
 template <typename G>
 G cMass <G>::take_number (int iterator_) {
 
@@ -101,6 +126,9 @@ G cMass <G>::take_number (int iterator_) {
 
 
 //==========================
+/*!
+  The function is showing all array
+*/
 template <typename G>
 void cMass <G>::show () const {
 	
@@ -149,6 +177,11 @@ bool cMass <G>::Ok () {
 }
 
 //==========================
+//---------------------------------------
+//! The function work with array realloc new memory
+//! @param iterator to number
+//! @return saccess of operation
+//---------------------------------------
 template <typename G>
 bool cMass <G>::internal_resize (int iterator_) {
 

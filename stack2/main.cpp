@@ -1,3 +1,9 @@
+//---------------------------------------
+//! @file main.cpp
+//! Tests a stack class
+//!
+//! @author Ruknez, 2017
+//---------------------------------------
 #include <iostream>
 #include <string>
 #include <cstdio>
@@ -11,14 +17,22 @@
 
 #include "cStack.h"
 #include "const_guard_class.h"
-
+//---------------------------------------
+//! A simple unit-test
+//! @param manual tests
+//---------------------------------------
 using std::cout;
 using std::endl;
 
- template <int N> unsigned int number_of_comand_in_array (const char (&array_) [N][44]);
+template <int N> unsigned int number_of_comand_in_array (const char (&array_) [N][44]);
 void abstract ();
 
 typedef cStack<double> stackDouble;
+
+//---------------------------------------
+//! main
+//---------------------------------------
+
 
 int main () {
 
@@ -122,7 +136,7 @@ std::vector<double> temporary_storage;
          temporary_storage.pop_back ();
     }
     return 0;
-}
+} // end of main ()
 
  template <int N> unsigned int number_of_comand_in_array (const char (&array_) [N][44]) {
    int comand_in_array = 0;

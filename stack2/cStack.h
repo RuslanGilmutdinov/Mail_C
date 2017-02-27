@@ -1,3 +1,10 @@
+//---------------------------------------
+//! @file main.cpp
+//! Implements a cStack class
+//!
+//! @author Ruknez, 2017
+//---------------------------------------
+
 #ifndef cSTACK_H_
 #define cSTACK_H_	
 
@@ -23,53 +30,57 @@ using std::endl;
 
 typedef cMass<double> MassDouble;
 
+//---------------------------------------
+//! Stack class
+//---------------------------------------
+
 template <typename T> 
 class cStack {
-	
-	public:
-		cStack ();
-                cStack ( T data [], const int n); /*Not realizd */
-		~cStack ();
-#ifdef COPY_CONSTRUCTOR
-                cStack (cStack &copy_stack);
-#endif
-                cStack <T> &operator=(cStack <T> &copy_stack ) {
-                    std::vector<T> temporary_storage;
-                    /*Заполняем вектор всеми элементами из копируемого стека */
-                    while ( !(copy_stack.show_last_element () != copy_stack.show_last_element ()) ) {
-                        temporary_storage.push_back (copy_stack.pop ());
-                    }
 
-                    while ( !(this->show_last_element () != this->show_last_element ()) ) {
-                        this->pop ();
-                    }
-
-                    int size = temporary_storage.size ();
-                    cout << "size = " << size << endl;
-                    for (int i = 0; i < size; i++) {
-                       this->push (temporary_storage.back ());
-                       copy_stack.push (temporary_storage.back ());
-                       temporary_storage.pop_back ();
-                    }
-
+    public:
+        cStack ();
+        cStack ( T data [], const int n); /*Not realizd */
+        ~cStack ();
+    #ifdef COPY_CONSTRUCTOR
+            cStack (cStack &copy_stack);
+    #endif
+            cStack <T> &operator=(cStack <T> &copy_stack ) {
+                std::vector<T> temporary_storage;
+                /*Заполняем вектор всеми элементами из копируемого стека */
+                while ( !(copy_stack.show_last_element () != copy_stack.show_last_element ()) ) {
+                    temporary_storage.push_back (copy_stack.pop ());
                 }
 
-                bool Ok () const;
-		void show () const;
-		
-		bool push (T valua);
-		T pop ();
-		
-		int size ();
-		T show_last_element () const;
-		
-        private:
-		int m_memory_guard_first;
-                int m_count;
-		int m_memory_guard_second;      
-		int m_memory_guard_third;
-		MassDouble *m_mass;
-                void processing_error (const int namb_Of_error) const;
+                while ( !(this->show_last_element () != this->show_last_element ()) ) {
+                    this->pop ();
+                }
+
+                int size = temporary_storage.size ();
+                cout << "size = " << size << endl;
+                for (int i = 0; i < size; i++) {
+                   this->push (temporary_storage.back ());
+                   copy_stack.push (temporary_storage.back ());
+                   temporary_storage.pop_back ();
+                }
+
+            }
+
+        bool Ok () const;
+        void show () const;
+
+        bool push (T valua);
+        T pop ();
+
+        int size ();
+        T show_last_element () const;
+
+    private:
+        int m_memory_guard_first;
+        int m_count;
+        int m_memory_guard_second;
+        int m_memory_guard_third;
+        MassDouble *m_mass;
+            void processing_error (const int namb_Of_error) const;
 };
 
 //==========================
@@ -166,10 +177,11 @@ bool cStack <T>::Ok () const {
 }
 
 //=======================
-/*!
-	The function add one more number in stack
-	\param vell the new number
- */
+//---------------------------------------
+//! The function add one more number in stack
+//! @param value is an element to be pushed
+//! @return success of operation
+//---------------------------------------
 template <typename T> 
 bool cStack <T>::push (T valua) {
 	
@@ -188,8 +200,8 @@ bool cStack <T>::push (T valua) {
 
 //======================
 /*!
-	The function return the last element in stack
-	\return the last element in stack 
+    The function return the last element in stack
+    \return the last element in stack
  */
 template <typename T> 
 T cStack <T>::pop () {
@@ -216,6 +228,10 @@ T cStack <T>::pop () {
 }
 
 //======================
+//---------------------------------------
+//! The function show the size of stack
+//! @return the size of stack
+//---------------------------------------
 template <typename T> 
 int cStack <T>::size () {
 		
@@ -229,9 +245,8 @@ int cStack <T>::size () {
 
 //========================
 /*!
-	THe function is showing the size of stack
-	\param stack pointers 
- */
+  The function is showing the size of stack
+*/
 //#define SHOW(object) {object.show (#object) } 
  //SHOW (cStack <T>)
 template <typename T> 
@@ -245,6 +260,10 @@ void cStack <T>::show () const {
 }
 
 //=====================
+//---------------------------------------
+//! The function show the last number in the stack
+//! @return the last number
+//---------------------------------------
 template <typename T> 
 T cStack <T>::show_last_element () const {
 
@@ -266,6 +285,10 @@ T cStack <T>::show_last_element () const {
 }
 
 //==========================
+//---------------------------------------
+//! The function handles errors
+//! @param code of errors
+//---------------------------------------
 template <typename T>
 void cStack <T>::processing_error (const int namb_Of_error) const {
 
